@@ -1,6 +1,6 @@
-import Sequelize, {Modal} from "sequelize";
+import {Sequelize, Model} from "sequelize";
 import { decodeBase64 } from "bcryptjs";
-export default class Users extends Modal{
+export default class Users extends Model{
     static init(sequelize){
         super.init({
             nome: {
@@ -37,7 +37,8 @@ export default class Users extends Modal{
                 }
             },
         },{
-            sequelize
+            sequelize,
+            modelName: 'Users' 
         });
         this.addHook('beforeSave', async (user) =>{
             user.password_hash = await decodeBase64.hash(user.password, 8);
