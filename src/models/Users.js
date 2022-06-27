@@ -1,10 +1,10 @@
-import {Sequelize, Model} from "sequelize";
-import { decodeBase64 } from "bcryptjs";
+import {DataTypes, Model} from "sequelize";
+var bcrypt = require('bcryptjs');
 export default class Users extends Model{
     static init(sequelize){
         super.init({
             nome: {
-                type: Sequelize.STRING,
+                type: DataTypes.STRING,
                 defaultValue: '',
                 validate:{
                     len:{
@@ -14,8 +14,11 @@ export default class Users extends Model{
                 }
             },
             email: {
-                type: Sequelize.STRING,
+                type: DataTypes.STRING,
                 defaultValue: '',
+                unique:{
+                    msg:"Email já existe",
+                },
                 validate:{
                     isEmail:{
                         msg:'E-mail invalido',
@@ -23,25 +26,25 @@ export default class Users extends Model{
                 }
             },
             password_hash: {
-                type: Sequelize.STRING,
+                type: DataTypes.STRING,
                 defaultValue: '',
             },
             password: {
-                type: Sequelize.VIRTUAL,
+                type: DataTypes.VIRTUAL,
                 defaultValue: '',
                 validate:{
                     len:{
                         args: [6,50],
                         msg:'Senha precisa ter entre 6 e 50 caracteres',
-                    }
-                }
+                    },
+                },
             },
         },{
             sequelize,
-            modelName: 'Users' 
         });
         this.addHook('beforeSave', async (user) =>{
-            user.password_hash = await decodeBase64.hash(user.password, 8);
+            
+            user.password_hash = await bcrypt.hash(user.password, 8);
         });
         return this;
     }
