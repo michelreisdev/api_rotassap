@@ -2,9 +2,8 @@ import Aluno from "../models/Aluno";
 
 class HomeController {
     async index(req,res){
-      
         const appointments = await Aluno.create({
-            "nome": "teste",
+            "nome": "Teste",
             "email": "teste@teste.com",
             "idade": 23,
             "peso": 69,
