@@ -27,14 +27,29 @@ export default  class Aluno extends Model{
             idade: {
                 type: DataTypes.INTEGER,
                 defaultValue: '',
+                validate:{
+                    isInt:{
+                        msg:'Altura precisa ser um número'
+                    }
+                }
             },
             peso: {
                 type: DataTypes.FLOAT,
                 defaultValue: '',
+                validate:{
+                    isFloat:{
+                        msg:'Altura precisa ser um número'
+                    }
+                }
             },
             altura: {
                 type: DataTypes.FLOAT,
                 defaultValue: '',
+                validate:{
+                    isFloat:{
+                        msg:'Altura precisa ser um número'
+                    }
+                }
             },
         },{
             sequelize
